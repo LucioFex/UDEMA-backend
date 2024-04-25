@@ -1,17 +1,36 @@
 package Proyecto_UCEMA.UDEMA_backend.models;
 
-public class User {
-    private Long id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+
+@Entity
+@Table
+public class Person {
+	@Id
+	@SequenceGenerator(
+		name = "person_sequence",
+		sequenceName = "person_sequence",
+		allocationSize = 1
+	)
+	@GeneratedValue(
+		strategy = GenerationType.SEQUENCE,
+		generator = "person_sequence"
+	)
+	private Long id;
 	private String name;
 	private String surname;
 	private Integer age;
 	private String email;
 	private String password;
 
-	public User() {
+	public Person() {
 	}
 
-	public User(Long id, String name, String surname, Integer age, String email, String password) {
+	public Person(Long id, String name, String surname, Integer age, String email, String password) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
@@ -19,7 +38,7 @@ public class User {
 		this.email = email;
 		this.password = password;
 	}
-	public User(String name, String surname, Integer age, String email, String password) {
+	public Person(String name, String surname, Integer age, String email, String password) {
 		this.name = name;
 		this.surname = surname;
 		this.age = age;
