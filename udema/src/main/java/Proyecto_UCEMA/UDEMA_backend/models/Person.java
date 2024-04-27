@@ -1,11 +1,10 @@
 package Proyecto_UCEMA.UDEMA_backend.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import java.time.LocalDate;
+import java.time.Period;
+
+import jakarta.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table
@@ -23,26 +22,28 @@ public class Person {
 	private Long id;
 	private String name;
 	private String surname;
-	private Integer age;
 	private String email;
 	private String password;
+	private LocalDate dob;
+	@Transient
+	private Integer age;
 
 	public Person() {
 	}
 
-	public Person(Long id, String name, String surname, Integer age, String email, String password) {
+	public Person(Long id, String name, String surname, String email, LocalDate dob, String password) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
-		this.age = age;
 		this.email = email;
+		this.dob = dob;
 		this.password = password;
 	}
-	public Person(String name, String surname, Integer age, String email, String password) {
+	public Person(String name, String surname, String email, LocalDate dob, String password) {
 		this.name = name;
 		this.surname = surname;
-		this.age = age;
 		this.email = email;
+		this.dob = dob;
 		this.password = password;
 	}
 
@@ -71,7 +72,7 @@ public class Person {
 	}
 
 	public Integer getAge() {
-		return this.age;
+		return Period.between(this.dob, LocalDate.now()).getYears();
 	}
 
 	public void setAge(Integer age) {
@@ -92,6 +93,14 @@ public class Person {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public LocalDate getDob() {
+		return this.dob;
+	}
+
+	public void setDob(LocalDate dob) {
+		this.dob = dob;
 	}
 
 	@Override
