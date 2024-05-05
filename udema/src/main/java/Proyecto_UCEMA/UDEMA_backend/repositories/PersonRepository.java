@@ -11,6 +11,7 @@ import Proyecto_UCEMA.UDEMA_backend.models.Person;
 @Repository
 public interface PersonRepository
 		extends JpaRepository<Person, Long> {
+
 	@Query("SELECT p FROM Person p WHERE p.email = ?1")
 	Optional<Person> findPersonByEmail(String email);
 }
