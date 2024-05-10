@@ -12,7 +12,7 @@ import Proyecto_UCEMA.UDEMA_backend.repositories.StudentRepository;
 
 @Configuration
 public class StudentConfig {
-	@Bean
+	/*@Bean TODO: Se mantiene para pruebas
 	CommandLineRunner commandLineRunner(
 			StudentRepository repository) {
 		return args -> {
@@ -40,5 +40,5 @@ public class StudentConfig {
 				List.of(severus, luna)
 			);
 		};
-	}
+	}*/
 }

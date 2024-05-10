@@ -19,8 +19,7 @@ import jakarta.transaction.Transactional;
 public class StudentService {
 
 	private final StudentRepository studentRepository;
-	
-	@Autowired
+
 	public StudentService(StudentRepository studentRepository) {
 		this.studentRepository = studentRepository;
 	}
@@ -36,7 +35,7 @@ public class StudentService {
 		if (personOptional.isPresent()) {
 			throw new IllegalStateException("Email taken");
 		}
-		if (student.getCareer() == null) {
+		else if (student.getCareer() == null) {
 			throw new ResponseStatusException(
 				HttpStatus.UNPROCESSABLE_ENTITY,
 				"The 'career' field is required to add a student"
@@ -80,7 +79,6 @@ public class StudentService {
 				.findPersonByEmail(email);
 
 			if (personOptional.isPresent()) {
-				System.out.println("Esto se va a rompeeeeeeeeeeeeeeeeeer:   " + personOptional);
 				throw new IllegalStateException("Email taken");
 			}
 			student.setEmail(email);
