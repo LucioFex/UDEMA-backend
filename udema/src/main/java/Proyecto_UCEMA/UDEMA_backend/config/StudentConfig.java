@@ -7,29 +7,33 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import Proyecto_UCEMA.UDEMA_backend.models.Person;
-import Proyecto_UCEMA.UDEMA_backend.repositories.PersonRepository;
+import Proyecto_UCEMA.UDEMA_backend.models.Student;
+import Proyecto_UCEMA.UDEMA_backend.repositories.StudentRepository;
 
 @Configuration
-public class PersonConfig {
+public class StudentConfig {
 	@Bean
 	CommandLineRunner commandLineRunner(
-			PersonRepository repository) {
+			StudentRepository repository) {
 		return args -> {
-			Person severus = new Person(
+			Student severus = new Student(
 				"Severus",
 				"Snape",
 				"severus.snape@gmail.com",
 				LocalDate.of(1994, 11, 2),
-				"expelliarmus"
+				"expelliarmus",
+				LocalDate.of(2022, 5, 7),
+				"Ingeniería en Informática"
 			);
 			
-			Person luna = new Person(
+			Student luna = new Student(
 				"Luna",
 				"Lovegood",
 				"luna1lovegood@gmail.com",
 				LocalDate.of(2004, 3, 30),
-				"Wingardium"
+				"Wingardium",
+				LocalDate.of(2019, 9, 1),
+				"Ingeniería Industrial"
 			);
 
 			repository.saveAll(

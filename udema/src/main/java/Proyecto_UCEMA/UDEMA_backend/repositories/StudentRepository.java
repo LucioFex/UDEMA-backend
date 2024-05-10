@@ -7,10 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import Proyecto_UCEMA.UDEMA_backend.models.Person;
+import Proyecto_UCEMA.UDEMA_backend.models.Student;
 
 @Repository
-public interface PersonRepository
-		extends JpaRepository<Person, Long> {
+public interface StudentRepository
+		extends JpaRepository<Student, Long> {
+
+	@Query("SELECT p FROM Student p WHERE p.email = ?1")
+	Optional<Student> findStudentByEmail(String email);
 
 	@Query("SELECT p FROM Person p WHERE p.email = ?1")
 	Optional<Person> findPersonByEmail(String email);

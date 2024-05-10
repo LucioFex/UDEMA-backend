@@ -4,11 +4,10 @@ import java.time.LocalDate;
 import java.time.Period;
 
 import jakarta.persistence.*;
-import java.util.Objects;
 
 @Entity
-@Table
-public class Person {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Person {
 	@Id
 	@SequenceGenerator(
 		name = "person_sequence",
