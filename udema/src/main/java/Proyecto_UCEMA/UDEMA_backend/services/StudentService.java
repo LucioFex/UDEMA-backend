@@ -29,22 +29,10 @@ public class StudentService {
 	}
 
 	public void addNewStudent(Student student) {
-		Optional<Person> personOptional = studentRepository
-			.findPersonByEmail(student.getEmail());
-		
-		if (personOptional.isPresent()) {
-			throw new IllegalStateException("Email taken");
-		}
-		else if (student.getCareer() == null) {
+		if (student.getSubmissionDate() == null || student.getCareer() == null) {
 			throw new ResponseStatusException(
 				HttpStatus.UNPROCESSABLE_ENTITY,
-				"The 'career' field is required to add a student"
-			);
-		}
-		else if (student.getSubmissionDate() == null) {
-			throw new ResponseStatusException(
-				HttpStatus.UNPROCESSABLE_ENTITY,
-				"The submission date is required to add a student"
+				"You're missing data to add an student"
 			);
 		}
 		studentRepository.save(student);
@@ -61,27 +49,27 @@ public class StudentService {
 	}
 
 	@Transactional
-	public void updateStudent(Long studentId, String name, String email, String career) {
+	public void updateStudent(Long studentId, Student pStudent) {
 		Student student = studentRepository.findById(studentId)
 			.orElseThrow(() -> new IllegalStateException(
 				"Student with id " + studentId + " doesn\'t exist"
 			));
 		
-		if (name != null && !Objects.equals(student.getName(), name)) {
-			student.setName(name);
+		if (pStudent.getName() != null && !Objects.equals(student.getName(), pStudent.getName())) {
+			student.setName(pStudent.getName());
 		}
-		if (career != null && !Objects.equals(student.getCareer(), career)) {
-			student.setCareer(career);
+		if (pStudent.getCareer() != null && !Objects.equals(student.getCareer(), pStudent.getCareer())) {
+			student.setCareer(pStudent.getCareer());
 			student.setSubmissionDate(LocalDate.now()); // The submission date is updated due to career change
 		}
-		if (email != null && email.length() > 0 && !Objects.equals(student.getEmail(), email)) {
+		if (pStudent.getEmail() != null && pStudent.getEmail().length() > 0 && !Objects.equals(student.getEmail(), pStudent.getEmail())) {
 			Optional<Person> personOptional = studentRepository
-				.findPersonByEmail(email);
+				.findPersonByEmail(pStudent.getEmail());
 
 			if (personOptional.isPresent()) {
 				throw new IllegalStateException("Email taken");
 			}
-			student.setEmail(email);
+			student.setEmail(pStudent.getEmail());
 		}
 	}
 

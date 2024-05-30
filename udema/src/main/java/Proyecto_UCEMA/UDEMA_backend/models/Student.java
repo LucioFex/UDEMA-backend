@@ -3,12 +3,13 @@ package Proyecto_UCEMA.UDEMA_backend.models;
 import java.time.LocalDate;
 import java.time.Period;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Transient;
 
 @Entity
-@PrimaryKeyJoinColumn(name = "personId")
+@DiscriminatorValue("student")
 public class Student extends Person {
 	private LocalDate submissionDate;
 	private String career;
@@ -17,8 +18,8 @@ public class Student extends Person {
 
 	public Student() {}
 
-	public Student(String name, String surname, String email, LocalDate dob, String password, LocalDate submissionDate, String career) {
-		super(name, surname, email, dob, password);
+	public Student(String name, String surname, String email, LocalDate dateOfBirth, String password, LocalDate submissionDate, String career) {
+		super(name, surname, email, dateOfBirth, password);
 		this.submissionDate = submissionDate;
 		this.career = career;
 	}

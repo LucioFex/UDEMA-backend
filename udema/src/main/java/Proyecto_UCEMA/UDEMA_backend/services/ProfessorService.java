@@ -27,16 +27,10 @@ public class ProfessorService {
 	}
 
 	public void addNewProfessor(Professor professor) {
-		Optional<Person> personOptional = professorRepository
-			.findPersonByEmail(professor.getEmail());
-		
-		if (personOptional.isPresent()) {
-			throw new IllegalStateException("Email taken");
-		}
-		else if (professor.getSubmissionDate() == null) {
+		if (professor.getSubmissionDate() == null) {
 			throw new ResponseStatusException(
 				HttpStatus.UNPROCESSABLE_ENTITY,
-				"The submission date is required to add a professor"
+				"You're missing data to add a professor"
 			);
 		}
 		professorRepository.save(professor);
@@ -53,23 +47,23 @@ public class ProfessorService {
 	}
 
 	@Transactional
-	public void updateProfessor(Long professorId, String name, String email) {
+	public void updateProfessor(Long professorId, Professor pProfessor) {
 		Professor professor = professorRepository.findById(professorId)
 			.orElseThrow(() -> new IllegalStateException(
 				"Professor with id " + professorId + " doesn\'t exist"
 			));
 		
-		if (name != null && !Objects.equals(professor.getName(), name)) {
-			professor.setName(name);
+		if (pProfessor.getName() != null && !Objects.equals(professor.getName(), pProfessor.getName())) {
+			professor.setName(pProfessor.getName());
 		}
-		if (email != null && email.length() > 0 && !Objects.equals(professor.getEmail(), email)) {
+		if (pProfessor.getEmail() != null && pProfessor.getEmail().length() > 0 && !Objects.equals(professor.getEmail(), pProfessor.getEmail())) {
 			Optional<Person> personOptional = professorRepository
-				.findPersonByEmail(email);
+				.findPersonByEmail(pProfessor.getEmail());
 
 			if (personOptional.isPresent()) {
 				throw new IllegalStateException("Email taken");
 			}
-			professor.setEmail(email);
+			professor.setEmail(pProfessor.getEmail());
 		}
 	}
 

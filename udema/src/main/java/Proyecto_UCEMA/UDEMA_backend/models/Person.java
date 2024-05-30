@@ -6,43 +6,41 @@ import java.time.Period;
 import jakarta.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE) // Specify this isn't necessary because it comes by default with JPA.
+@DiscriminatorColumn(name = "person_type", discriminatorType = DiscriminatorType.STRING)
 public abstract class Person {
 	@Id
-	@SequenceGenerator(
-		name = "person_sequence",
-		sequenceName = "person_sequence",
-		allocationSize = 1
-	)
-	@GeneratedValue(
-		strategy = GenerationType.SEQUENCE,
-		generator = "person_sequence"
-	)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+
 	private Long id;
+	@Column(name = "name", nullable = false)
 	private String name;
 	private String surname;
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
+	@Column(name = "password", nullable = false)
 	private String password;
-	private LocalDate dob;
+	@Column(name = "dateOfBirth", nullable = false)
+	private LocalDate dateOfBirth;
 	@Transient
 	private Integer age;
 
 	public Person() {
 	}
 
-	public Person(Long id, String name, String surname, String email, LocalDate dob, String password) {
+	public Person(Long id, String name, String surname, String email, LocalDate dateOfBirth, String password) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
-		this.dob = dob;
+		this.dateOfBirth = dateOfBirth;
 		this.password = password;
 	}
-	public Person(String name, String surname, String email, LocalDate dob, String password) {
+	public Person(String name, String surname, String email, LocalDate dateOfBirth, String password) {
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
-		this.dob = dob;
+		this.dateOfBirth = dateOfBirth;
 		this.password = password;
 	}
 
@@ -71,7 +69,7 @@ public abstract class Person {
 	}
 
 	public Integer getAge() {
-		return Period.between(this.dob, LocalDate.now()).getYears();
+		return Period.between(this.dateOfBirth, LocalDate.now()).getYears();
 	}
 
 	public void setAge(Integer age) {
@@ -94,12 +92,12 @@ public abstract class Person {
 		this.password = password;
 	}
 
-	public LocalDate getDob() {
-		return this.dob;
+	public LocalDate getDateOfBirth() {
+		return this.dateOfBirth;
 	}
 
-	public void setDob(LocalDate dob) {
-		this.dob = dob;
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	@Override
