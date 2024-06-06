@@ -1,6 +1,7 @@
 package Proyecto_UCEMA.UDEMA_backend.services;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -10,8 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import Proyecto_UCEMA.UDEMA_backend.models.Student;
-import Proyecto_UCEMA.UDEMA_backend.models.Person;
 import Proyecto_UCEMA.UDEMA_backend.repositories.StudentRepository;
+import Proyecto_UCEMA.UDEMA_backend.models.Person;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -25,6 +26,16 @@ public class StudentService {
 
 	public List<Student> getStudents() {
 		return studentRepository.findAll();
+	}
+
+	public List<Student> getStudentsInCourse(Long courseId) {
+		List<Person> people = studentRepository.findStudentsByCourseId(courseId);
+		List<Student> students = new ArrayList<Student>();
+		// return studentRepository.findStudentsByCourseId(0)
+		for (int personIdx = 0; personIdx < people.size(); personIdx++) {
+			students.add((Student)people.get(personIdx));
+		}
+		return students;
 	}
 
 	public void addNewStudent(Student student) {

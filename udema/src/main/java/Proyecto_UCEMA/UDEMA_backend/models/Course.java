@@ -76,8 +76,4 @@ public class Course {
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
-
-	public void setProfessor(Professor professor) {
-		this.professor = null;
-	}
 }

@@ -38,5 +38,3 @@ public class CourseController {
 		courseService.deleteCourse(courseId);
 	}
 }
-
-// TODO: Probar
