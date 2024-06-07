@@ -70,7 +70,6 @@ public class CourseService {
 
 			course.addStudent(student);
 			courseRepository.save(course);
-			studentRepository.save(student);
 		} else {
 			throw new RuntimeException("The course or student weren\'t found");
 		}

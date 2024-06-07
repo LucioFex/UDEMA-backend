@@ -1,5 +1,6 @@
 package Proyecto_UCEMA.UDEMA_backend.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -65,7 +66,6 @@ public class Course {
 
 	public void addStudent(Student student) {
 		this.students.add(student);
-		// FIXME: No se están agregando nuevos estudiantes al curso
 	}
 
 	public void removeStudent(Student student) {
