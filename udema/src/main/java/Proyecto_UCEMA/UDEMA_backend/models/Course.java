@@ -14,8 +14,10 @@ public class Course {
 	@Column(name = "name", nullable = false, unique = true)
 	private String name;
 	private String description;
-	@OneToMany
+
+	@ManyToMany
 	private List<Student> students;
+
 	@OneToOne
 	private Professor professor;
 
@@ -63,6 +65,7 @@ public class Course {
 
 	public void addStudent(Student student) {
 		this.students.add(student);
+		// FIXME: No se están agregando nuevos estudiantes al curso
 	}
 
 	public void removeStudent(Student student) {

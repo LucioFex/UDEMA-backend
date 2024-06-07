@@ -4,11 +4,15 @@ import java.time.LocalDate;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
 
 @Entity
 @DiscriminatorValue("professor")
 public class Professor extends Person {
 	private LocalDate submissionDate;
+
+	@OneToOne(mappedBy = "professor")
+	private Course course;
 
 	public Professor() {}
 

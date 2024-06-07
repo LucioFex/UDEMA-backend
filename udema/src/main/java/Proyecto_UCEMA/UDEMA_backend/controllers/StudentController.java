@@ -30,11 +30,6 @@ public class StudentController {
 		return studentService.getStudents();
 	}
 
-	@GetMapping("/course/{courseId}")
-	public List<Student> getStudentsByCourseId(@PathVariable("courseId") Long courseId) {
-		return studentService.getStudentsInCourse(courseId);
-	}
-
 	@PostMapping
 	public void registerNewStudent(@RequestBody Student student) {
 		studentService.addNewStudent(student);

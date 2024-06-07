@@ -28,16 +28,6 @@ public class StudentService {
 		return studentRepository.findAll();
 	}
 
-	public List<Student> getStudentsInCourse(Long courseId) {
-		List<Person> people = studentRepository.findStudentsByCourseId(courseId);
-		List<Student> students = new ArrayList<Student>();
-		// return studentRepository.findStudentsByCourseId(0)
-		for (int personIdx = 0; personIdx < people.size(); personIdx++) {
-			students.add((Student)people.get(personIdx));
-		}
-		return students;
-	}
-
 	public void addNewStudent(Student student) {
 		if (student.getSubmissionDate() == null || student.getCareer() == null) {
 			throw new ResponseStatusException(

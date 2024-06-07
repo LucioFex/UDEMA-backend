@@ -12,9 +12,7 @@ import Proyecto_UCEMA.UDEMA_backend.models.Professor;
 @Repository
 public interface ProfessorRepository
 		extends JpaRepository<Professor, Long> {
-	@Query("SELECT p FROM Professor p WHERE p.email = ?1")
+	
 	Optional<Professor> findProfessorByEmail(String email);
-
-	@Query("SELECT p FROM Person p WHERE p.email = ?1")
 	Optional<Person> findPersonByEmail(String email);
 }

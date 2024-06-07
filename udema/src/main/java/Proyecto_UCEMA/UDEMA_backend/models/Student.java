@@ -2,10 +2,15 @@ package Proyecto_UCEMA.UDEMA_backend.models;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Transient;
 
 @Entity
@@ -15,6 +20,17 @@ public class Student extends Person {
 	private String career;
 	@Transient
 	private Integer year;
+
+	@ManyToMany(
+		fetch = FetchType.LAZY,
+		cascade = { CascadeType.PERSIST, CascadeType.MERGE }
+	)
+	@JoinTable(
+		name = "student_course",
+		joinColumns = @JoinColumn(name = "student_id"),
+		inverseJoinColumns = @JoinColumn(name = "course_id")
+	)
+	private List<Course> courses;
 
 	public Student() {}
 
