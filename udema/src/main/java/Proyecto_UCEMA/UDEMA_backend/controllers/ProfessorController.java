@@ -3,7 +3,7 @@ package Proyecto_UCEMA.UDEMA_backend.controllers;
 import org.springframework.web.bind.annotation.RestController;
 
 import Proyecto_UCEMA.UDEMA_backend.models.Professor;
-import Proyecto_UCEMA.UDEMA_backend.services.ProfessorService;
+import Proyecto_UCEMA.UDEMA_backend.services.ProfessorServiceImpl;
 
 import java.util.List;
 
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RestController
 @RequestMapping(path = "api/professors")
 public class ProfessorController {
-	private final ProfessorService professorService;
+	private final ProfessorServiceImpl professorService;
 
-	public ProfessorController(ProfessorService professorService) {
+	public ProfessorController(ProfessorServiceImpl professorService) {
 		this.professorService = professorService;
 	}
 

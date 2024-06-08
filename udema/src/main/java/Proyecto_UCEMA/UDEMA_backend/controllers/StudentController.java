@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import Proyecto_UCEMA.UDEMA_backend.models.Student;
-import Proyecto_UCEMA.UDEMA_backend.services.StudentService;
+import Proyecto_UCEMA.UDEMA_backend.services.StudentServiceImpl;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @RequestMapping(path = "api/students")
 public class StudentController {
-	private final StudentService studentService;
+	private final StudentServiceImpl studentService;
 
-	public StudentController(StudentService studentService) {
+	public StudentController(StudentServiceImpl studentService) {
 		this.studentService = studentService;
 	}
 

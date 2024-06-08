@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.*;
 
 import Proyecto_UCEMA.UDEMA_backend.models.Course;
 import Proyecto_UCEMA.UDEMA_backend.models.Student;
-import Proyecto_UCEMA.UDEMA_backend.services.CourseService;
+import Proyecto_UCEMA.UDEMA_backend.services.CourseServiceImpl;
 
 @RestController
 @RequestMapping(path = "api/courses")
 public class CourseController {
-	private final CourseService courseService;
+	private final CourseServiceImpl courseService;
 
-	public CourseController(CourseService courseService) {
+	public CourseController(CourseServiceImpl courseService) {
 		this.courseService = courseService;
 	}
 
