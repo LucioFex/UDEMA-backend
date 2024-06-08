@@ -1,7 +1,8 @@
 # UDEMA-Backend
+<img src="https://github.com/LucioFex/UDEMA-backend/assets/63211038/c1a53e0e-6e6d-4b60-9a08-30962629d8c7" width=25% height=auto>
+
 UDEMA es un sitio web con la temática propia de un webcampus universitario.
 El propósito de este proyecto es cumplir con los requerimientos de la materia "Programación 3" de la UCEMA (ININF).
-
 
 
 ```sql
