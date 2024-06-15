@@ -40,4 +40,5 @@ El endpoint para acceder al mismo es el siguiente:
 http://localhost:8080/swagger-ui/index.html
 ```
 
-<img height="auto" src="https://github.com/LucioFex/UDEMA-backend/assets/63211038/7a44af15-ebe5-45f8-b8d0-369cf6b82576">
+<img height="auto" src="https://github.com/LucioFex/UDEMA-backend/assets/63211038/2da1471e-7350-4e0d-a95f-91d2bc03c013">
+
