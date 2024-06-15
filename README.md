@@ -28,3 +28,16 @@ Una vez descargado el proyecto, utilizar los siguiente comandos para levantar el
 mvn compile
 mvn spring-boot:run
 ```
+
+
+## Documentación
+
+Es posible revisar el listado de endpoints disponibles utilizando Swagger.
+El endpoint para acceder al mismo es el siguiente:
+
+```bash
+# Considerar que el puerto puede cambiar dependiendo de la configuración utilizada en el proyecto
+http://localhost:8080/swagger-ui/index.html
+```
+
+<img height="auto" src="https://github.com/LucioFex/UDEMA-backend/assets/63211038/7a44af15-ebe5-45f8-b8d0-369cf6b82576">
