@@ -1,6 +1,5 @@
 package Proyecto_UCEMA.UDEMA_backend.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -18,6 +17,9 @@ public class Course {
 
 	@ManyToMany
 	private List<Student> students;
+
+	@OneToMany
+	private List<Class> classes;
 
 	@OneToOne
 	private Professor professor;
@@ -78,5 +80,13 @@ public class Course {
 
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
+	}
+
+	public void addSClass(Class pClass) {
+		this.classes.add(pClass);
+	}
+
+	public void removeClass(Class pClass) {
+		this.classes.remove(pClass);
 	}
 }

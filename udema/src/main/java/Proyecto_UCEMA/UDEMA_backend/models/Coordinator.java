@@ -1,6 +1,5 @@
 package Proyecto_UCEMA.UDEMA_backend.models;
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class Coordinator extends Person {
 

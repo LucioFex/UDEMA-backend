@@ -1,7 +1,6 @@
 package Proyecto_UCEMA.UDEMA_backend.services;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -57,6 +56,9 @@ public class StudentServiceImpl {
 		
 		if (pStudent.getName() != null && !Objects.equals(student.getName(), pStudent.getName())) {
 			student.setName(pStudent.getName());
+		}
+		if (pStudent.getSubmissionDate() != null && !Objects.equals(student.getSubmissionDate(), pStudent.getSubmissionDate())) {
+			student.setSubmissionDate(pStudent.getSubmissionDate());
 		}
 		if (pStudent.getCareer() != null && !Objects.equals(student.getCareer(), pStudent.getCareer())) {
 			student.setCareer(pStudent.getCareer());
