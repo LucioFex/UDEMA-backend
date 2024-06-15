@@ -1,6 +1,7 @@
 package Proyecto_UCEMA.UDEMA_backend.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import Proyecto_UCEMA.UDEMA_backend.models.Course;
+import Proyecto_UCEMA.UDEMA_backend.models.Class;
 import Proyecto_UCEMA.UDEMA_backend.models.Student;
 
 @Repository
@@ -18,4 +20,13 @@ public interface CourseRepository
 
 	@Query("SELECT c.students FROM Course c WHERE c.id = :courseId")
 	List<Student> findStudentsByCourseId(@Param("courseId") Long courseId);
+
+	@Query("SELECT c.classes FROM Course c WHERE c.id = :courseId")
+	List<Class> findClassessByCourseId(@Param("courseId") Long courseId);
+
+	@Query("SELECT c FROM Class c WHERE c.course.id = :courseId AND c.number = :classNumber")
+	Optional<Class> findClassByCourseIdAndNumber(@Param("courseId") Long courseId, @Param("classNumber") Integer classNumber);
+
+	@Query("SELECT c FROM Class c WHERE c.course.id = :courseId ORDER BY c.number DESC LIMIT 1")
+	Optional<Class> findTopByCourseIdOrderByNumberDesc(@Param("courseId") Long courseId);
 }

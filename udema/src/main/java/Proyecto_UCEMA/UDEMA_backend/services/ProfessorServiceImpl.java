@@ -55,6 +55,9 @@ public class ProfessorServiceImpl implements ProfessorService {
 		if (pProfessor.getName() != null && !Objects.equals(professor.getName(), pProfessor.getName())) {
 			professor.setName(pProfessor.getName());
 		}
+		if (pProfessor.getSubmissionDate() != null && !Objects.equals(professor.getSubmissionDate(), pProfessor.getSubmissionDate())) {
+			professor.setSubmissionDate(pProfessor.getSubmissionDate());
+		}
 		if (pProfessor.getEmail() != null && pProfessor.getEmail().length() > 0 && !Objects.equals(professor.getEmail(), pProfessor.getEmail())) {
 			Optional<Person> personOptional = professorRepository
 				.findPersonByEmail(pProfessor.getEmail());
@@ -79,3 +82,5 @@ public class ProfessorServiceImpl implements ProfessorService {
 		}
 	}
 }
+
+// FIXME:
