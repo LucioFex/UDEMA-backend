@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import Proyecto_UCEMA.UDEMA_backend.models.Class;
 import Proyecto_UCEMA.UDEMA_backend.models.Course;
+import Proyecto_UCEMA.UDEMA_backend.models.Professor;
 import Proyecto_UCEMA.UDEMA_backend.models.Student;
 import Proyecto_UCEMA.UDEMA_backend.repositories.CourseRepository;
+import Proyecto_UCEMA.UDEMA_backend.repositories.ProfessorRepository;
 import Proyecto_UCEMA.UDEMA_backend.repositories.StudentRepository;
 import Proyecto_UCEMA.UDEMA_backend.repositories.ClassRepository;
 import jakarta.transaction.Transactional;
@@ -19,23 +21,24 @@ public class CourseServiceImpl implements CourseService {
 	private final CourseRepository courseRepository;
 	private final StudentRepository studentRepository;
 	private final ClassRepository classRepository;
+	private final ProfessorRepository professorRepository;
 
-	public CourseServiceImpl(CourseRepository courseRepository, StudentRepository studentRepository, ClassRepository classRepository) {
+	public CourseServiceImpl(
+		CourseRepository courseRepository,
+		StudentRepository studentRepository,
+		ClassRepository classRepository,
+		ProfessorRepository professorRepository
+	) {
 		this.courseRepository = courseRepository;
 		this.studentRepository = studentRepository;
 		this.classRepository = classRepository;
+		this.professorRepository = professorRepository;
 	}
+
+	// Course section
 
 	public List<Course> getCourses() {
 		return courseRepository.findAll();
-	}
-
-	public List<Student> getStudentsInCourse(Long courseId) {
-		return courseRepository.findStudentsByCourseId(courseId);
-	}
-
-	public List<Class> getClassesInCourse(Long courseId) {
-		return courseRepository.findClassessByCourseId(courseId);
 	}
 
 	public void addNewCourse(Course course) {
@@ -67,26 +70,86 @@ public class CourseServiceImpl implements CourseService {
 		}
 	}
 
+	// Professor section
+
+	public Professor getProfessorByCourse(Long courseId) {
+		return courseRepository.findProfessorByCourseId(courseId)
+			.orElseThrow(() -> new IllegalStateException(
+				"The course with id " + courseId + " doesn\'t have a professor selected"
+			));
+	}
+
+	@Transactional
+	public void addProfessor(Long courseId, Long professorId) {
+		Optional<Course> courseOptional = courseRepository.findById(courseId);
+		Optional<Professor> professorOptional = professorRepository.findById(professorId);
+	
+		if (courseOptional.isPresent() && professorOptional.isPresent()) {
+			throw new RuntimeException("The course or student weren\'t found");
+		}
+		
+		Course course = courseOptional.get();
+		Professor professor = professorOptional.get();
+
+		course.setProfessor(professor);
+		courseRepository.save(course);
+	}
+
+	@Transactional
+	public void removeProfessor(Long courseId) {
+		Optional<Course> courseOptional = courseRepository.findById(courseId);
+
+		if (courseOptional.isPresent()) {
+			throw new RuntimeException("The course or professor weren\'t found");
+		}
+
+		Course course = courseOptional.get();
+		course.removeProfessor();
+		courseRepository.save(course);
+	}
+
+	// Student section
+
+	public List<Student> getStudentsInCourse(Long courseId) {
+		return courseRepository.findStudentsByCourseId(courseId);
+	}
+
 	@Transactional
 	public void addStudent(Long courseId, Long studentId) {
 		Optional<Course> courseOptional = courseRepository.findById(courseId);
 		Optional<Student> studentOptional = studentRepository.findById(studentId);
 	
 		if (courseOptional.isPresent() && studentOptional.isPresent()) {
-			Course course = courseOptional.get();
-			Student student = studentOptional.get();
-
-			course.addStudent(student);
-			courseRepository.save(course);
-		} else {
 			throw new RuntimeException("The course or student weren\'t found");
 		}
+		
+		Course course = courseOptional.get();
+		Student student = studentOptional.get();
+
+		course.addStudent(student);
+		courseRepository.save(course);
 	}
 
-	@Transactional // TODO:
+	@Transactional
 	public void removeStudent(Long courseId, Long studentId) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'removeStudent'");
+		Optional<Course> courseOptional = courseRepository.findById(courseId);
+		Optional<Student> studentOptional = studentRepository.findById(studentId);
+
+		if (courseOptional.isPresent() && studentOptional.isPresent()) {
+			throw new RuntimeException("The course or student weren\'t found");
+		}
+
+		Course course = courseOptional.get();
+		Student student = studentOptional.get();
+
+		course.removeStudent(student);
+		courseRepository.save(course);
+	}
+
+	// Class section
+
+	public List<Class> getClassesInCourse(Long courseId) {
+		return courseRepository.findClassessByCourseId(courseId);
 	}
 
 	@Transactional

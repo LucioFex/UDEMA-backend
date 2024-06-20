@@ -82,6 +82,10 @@ public class Course {
 		this.professor = professor;
 	}
 
+	public void removeProfessor() {
+		this.professor = null;
+	}
+
 	public void addSClass(Class pClass) {
 		this.classes.add(pClass);
 	}
