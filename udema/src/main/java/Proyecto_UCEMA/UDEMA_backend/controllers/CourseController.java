@@ -51,7 +51,7 @@ public class CourseController {
 	// Professor section
 
 	@Operation(summary = "Get course professor", description = "Get the course professor")
-	@GetMapping("{courseId}/students")
+	@GetMapping("{courseId}/professor")
 	public Professor getProfessorByCourseId(@PathVariable("courseId") Long courseId) {
 		return courseService.getProfessorByCourse(courseId);
 	}
