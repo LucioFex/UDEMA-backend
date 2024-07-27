@@ -6,11 +6,13 @@ import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import Proyecto_UCEMA.UDEMA_backend.repositories.ClassRepository;
-import Proyecto_UCEMA.UDEMA_backend.repositories.CourseRepository;
 import Proyecto_UCEMA.UDEMA_backend.models.Class;
 import Proyecto_UCEMA.UDEMA_backend.models.Course;
+import Proyecto_UCEMA.UDEMA_backend.repositories.ClassRepository;
+import Proyecto_UCEMA.UDEMA_backend.repositories.CourseRepository;
 
 @Configuration
 public class ClassConfig {
@@ -42,4 +44,20 @@ public class ClassConfig {
 			);
 		};
 	}
+
+	// TODO: Seguir averiguando porqué no se permite el acceso a peticiones POST desde el front para 'class' (problema de CORS), mientras
+	// que si se puede leer, borrar, etc... Y el resto de clases tampoco tienen problemas de CORS.
+	@Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/api/**")
+                        .allowedOrigins("http://localhost:4200")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
+            }
+        };
+    }
 }
