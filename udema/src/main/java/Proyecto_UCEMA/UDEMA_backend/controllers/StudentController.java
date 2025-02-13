@@ -1,6 +1,7 @@
 package Proyecto_UCEMA.UDEMA_backend.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,6 +34,11 @@ public class StudentController {
 		return studentService.getStudents();
 	}
 
+	@Operation(summary = "Get specific student", description = "Get specific student by ID")
+	@GetMapping("{studentId}")
+	public Optional<Student> getStudent(@PathVariable("studentId") Long studentId) {
+		return studentService.getStudent(studentId);
+	}
 
 	@Operation(summary = "Register new student", description = "Register a new student")
 	@PostMapping

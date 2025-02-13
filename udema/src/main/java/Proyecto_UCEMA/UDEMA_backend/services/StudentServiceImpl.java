@@ -9,9 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import Proyecto_UCEMA.UDEMA_backend.models.Person;
 import Proyecto_UCEMA.UDEMA_backend.models.Student;
 import Proyecto_UCEMA.UDEMA_backend.repositories.StudentRepository;
-import Proyecto_UCEMA.UDEMA_backend.models.Person;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -26,6 +26,17 @@ public class StudentServiceImpl {
 	public List<Student> getStudents() {
 		return studentRepository.findAll();
 	}
+
+	public Optional<Student> getStudent(Long studentId) {
+		boolean exists = studentRepository.existsById(studentId);
+		if (!exists) {
+			throw new IllegalStateException(
+				"Student with id " + studentId + " doesn\'t exist"
+			);
+		}
+		return studentRepository.findById(studentId);
+	}
+
 
 	public void addNewStudent(Student student) {
 		if (student.getSubmissionDate() == null || student.getCareer() == null) {
@@ -53,7 +64,7 @@ public class StudentServiceImpl {
 			.orElseThrow(() -> new IllegalStateException(
 				"Student with id " + studentId + " doesn\'t exist"
 			));
-		
+
 		if (pStudent.getName() != null && !Objects.equals(student.getName(), pStudent.getName())) {
 			student.setName(pStudent.getName());
 		}
@@ -81,7 +92,7 @@ public class StudentServiceImpl {
 			.orElseThrow(() -> new IllegalStateException(
 				"Student with id " + studentId + " doesn\'t exist"
 			));
-		
+
 		// TODO: Add security
 		if (password != null && !Objects.equals(student.getPassword(), password)) {
 			student.setPassword(password);

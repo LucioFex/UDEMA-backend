@@ -12,6 +12,7 @@ import Proyecto_UCEMA.UDEMA_backend.models.Student;
 public interface StudentRepository
 		extends JpaRepository<Student, Long> {
 
+	Optional<Student> findStudentById(Long studentId);
 	Optional<Student> findStudentByEmail(String email);
 	Optional<Person> findPersonByEmail(String email);
 }
