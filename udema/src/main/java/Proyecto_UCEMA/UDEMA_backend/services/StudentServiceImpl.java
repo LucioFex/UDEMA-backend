@@ -15,7 +15,7 @@ import Proyecto_UCEMA.UDEMA_backend.repositories.StudentRepository;
 import jakarta.transaction.Transactional;
 
 @Service
-public class StudentServiceImpl {
+public class StudentServiceImpl implements StudentService{
 
 	private final StudentRepository studentRepository;
 

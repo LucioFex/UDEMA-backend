@@ -18,25 +18,31 @@ import Proyecto_UCEMA.UDEMA_backend.repositories.CourseRepository;
 public class ClassConfig {
 	@Bean
 	CommandLineRunner commandLineRunnerClass(ClassRepository classRepository, CourseRepository courseRepository) {
-		return args -> { // TODO: Used for testing
-			Course potions = new Course(
-				"Potions",
-				"Learn how to brew various magical potions."
+		return args -> { // Used for testing
+			Course potionsCourse = new Course(
+				"PotionsCourse",
+				"Learn how to brew various magical potionsCourse."
 			);
-			courseRepository.save(potions);
+			courseRepository.save(potionsCourse);
+			
+			Course charmsCourse = new Course(
+				"CharmsCourse",
+				"Master the art of spellcasting and learn various magical charms."
+			);
+			courseRepository.save(charmsCourse);
 
 			// Crear clases y asociarlas con el curso
 			Class class1 = new Class(
 				1,
 				"A2",
 				LocalDate.of(2024, 7, 25),
-				potions
+				potionsCourse
 			);
 			Class class2 = new Class(
 				2,
 				"B3",
 				LocalDate.of(2024, 7, 26),
-				potions
+				charmsCourse
 			);
 
 			classRepository.saveAll(
@@ -45,19 +51,17 @@ public class ClassConfig {
 		};
 	}
 
-	// TODO: Seguir averiguando porqué no se permite el acceso a peticiones POST desde el front para 'class' (problema de CORS), mientras
-	// que si se puede leer, borrar, etc... Y el resto de clases tampoco tienen problemas de CORS.
 	@Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:4200")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
-            }
-        };
-    }
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/api/**")
+						.allowedOrigins("http://localhost:4200")
+						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+						.allowedHeaders("*")
+						.allowCredentials(true);
+			}
+		};
+	}
 }

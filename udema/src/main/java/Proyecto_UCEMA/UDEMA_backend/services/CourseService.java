@@ -2,28 +2,29 @@ package Proyecto_UCEMA.UDEMA_backend.services;
 
 import java.util.List;
 
+import Proyecto_UCEMA.UDEMA_backend.dto.CourseDTO;
+import Proyecto_UCEMA.UDEMA_backend.models.Class;
 import Proyecto_UCEMA.UDEMA_backend.models.Course;
 import Proyecto_UCEMA.UDEMA_backend.models.Professor;
 import Proyecto_UCEMA.UDEMA_backend.models.Student;
-import Proyecto_UCEMA.UDEMA_backend.models.Class;
 
 public interface CourseService {
 	// Course section
 
 	List<Course> getCourses();
 
-	void addNewCourse(Course course);
+	void addNewCourse(CourseDTO courseDTO);
 
 	void deleteCourse(Long courseId);
 
-	void updateCourse(Long courseId, Course pCourse);
+	void updateCourse(Long courseId, CourseDTO pCourseDTO);
 
 	// Professor section
 
 	Professor getProfessorByCourse(Long courseId);
 
 	void addProfessor(Long courseId, Long professorId);
-	
+
 	void removeProfessor(Long courseId);
 
 	// Student section

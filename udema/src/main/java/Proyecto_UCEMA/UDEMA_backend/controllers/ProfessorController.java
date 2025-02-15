@@ -1,6 +1,7 @@
 package Proyecto_UCEMA.UDEMA_backend.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,6 +32,12 @@ public class ProfessorController {
 	@GetMapping
 	public List<Professor> getProfessors() {
 		return professorService.getProfessors();
+	}
+
+	@Operation(summary = "Get specific professor", description = "Get specific professor by ID")
+	@GetMapping("{professorId}")
+	public Professor getProfessor(@PathVariable("professorId") Long professorId) {
+		return professorService.getProfessor(professorId);
 	}
 
 	@Operation(summary = "Register new professor", description = "Add a new professor")

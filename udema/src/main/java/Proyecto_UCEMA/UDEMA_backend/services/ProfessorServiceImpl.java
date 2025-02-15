@@ -21,10 +21,17 @@ public class ProfessorServiceImpl implements ProfessorService {
 		this.professorRepository = professorRepository;
 	}
 
+	@Override
 	public List<Professor> getProfessors() {
 		return professorRepository.findAll();
 	}
 
+	@Override
+	public Professor getProfessor(Long professorId) {
+		return professorRepository.findById(professorId).orElseThrow(() -> new IllegalArgumentException("Professor not found"));
+	}
+
+	@Override
 	public void addNewProfessor(Professor professor) {
 		if (professor.getSubmissionDate() == null) {
 			throw new ResponseStatusException(
@@ -35,6 +42,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 		professorRepository.save(professor);
 	}
 
+	@Override
 	public void deleteProfessor(Long professorId) {
 		boolean exists = professorRepository.existsById(professorId);
 		if (!exists) {
@@ -45,13 +53,14 @@ public class ProfessorServiceImpl implements ProfessorService {
 		professorRepository.deleteById(professorId);
 	}
 
+	@Override
 	@Transactional
 	public void updateProfessor(Long professorId, Professor pProfessor) {
 		Professor professor = professorRepository.findById(professorId)
 			.orElseThrow(() -> new IllegalStateException(
 				"Professor with id " + professorId + " doesn\'t exist"
 			));
-		
+
 		if (pProfessor.getName() != null && !Objects.equals(professor.getName(), pProfessor.getName())) {
 			professor.setName(pProfessor.getName());
 		}
@@ -69,13 +78,14 @@ public class ProfessorServiceImpl implements ProfessorService {
 		}
 	}
 
+	@Override
 	@Transactional
 	public void changePasswordProfessor(Long professorId, String password) {
 		Professor professor = professorRepository.findById(professorId)
 			.orElseThrow(() -> new IllegalStateException(
 				"Professor with id " + professorId + " doesn\'t exist"
 			));
-		
+
 		// TODO: Add security
 		if (password != null && !Objects.equals(professor.getPassword(), password)) {
 			professor.setPassword(password);

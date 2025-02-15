@@ -6,14 +6,16 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import Proyecto_UCEMA.UDEMA_backend.dto.CourseDTO;
 import Proyecto_UCEMA.UDEMA_backend.models.Class;
 import Proyecto_UCEMA.UDEMA_backend.models.Course;
 import Proyecto_UCEMA.UDEMA_backend.models.Professor;
 import Proyecto_UCEMA.UDEMA_backend.models.Student;
+import Proyecto_UCEMA.UDEMA_backend.repositories.ClassRepository;
 import Proyecto_UCEMA.UDEMA_backend.repositories.CourseRepository;
 import Proyecto_UCEMA.UDEMA_backend.repositories.ProfessorRepository;
 import Proyecto_UCEMA.UDEMA_backend.repositories.StudentRepository;
-import Proyecto_UCEMA.UDEMA_backend.repositories.ClassRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -37,41 +39,63 @@ public class CourseServiceImpl implements CourseService {
 
 	// Course section
 
+	@Override
 	public List<Course> getCourses() {
 		return courseRepository.findAll();
 	}
 
-	public void addNewCourse(Course course) {
+	@Override
+	@Transactional
+	public void addNewCourse(CourseDTO courseDTO) {
+		Course course = new Course(courseDTO.getId(), courseDTO.getName(), courseDTO.getDescription());
+		Student student;
+		Professor professor;
+
+		// Found students addition to the course
+		for (Long studentId : courseDTO.getStudentIds()) {
+			student = studentRepository.findById(studentId).orElseThrow(() -> new EntityNotFoundException("Student not found: " + studentId));
+			course.addStudent(student);
+		}
+
+		// Professor addition
+		professor = professorRepository.findById(courseDTO.getProfessorId()).orElseThrow(() -> new EntityNotFoundException("Student not found: " + courseDTO.getProfessorId()));
+		course.setProfessor(professor);
+
+		// Course save
 		courseRepository.save(course);
 	}
 
+	@Override
+	@Transactional
 	public void deleteCourse(Long courseId) {
 		boolean exists = courseRepository.existsById(courseId);
 		if (!exists) {
-			throw new IllegalStateException(
+			throw new IllegalArgumentException(
 				"Course with id " + courseId + " doesn\'t exist"
 			);
 		}
 		courseRepository.deleteById(courseId);
 	}
 
+	@Override
 	@Transactional
-	public void updateCourse(Long courseId, Course pCourse) {
+	public void updateCourse(Long courseId, CourseDTO pCourseDTO) {
 		Course course = courseRepository.findById(courseId)
-			.orElseThrow(() -> new IllegalStateException(
+			.orElseThrow(() -> new IllegalArgumentException(
 				"The course with id " + courseId + " doesn\'t exist"
 			));
-		
-		if (pCourse.getName() != null && !Objects.equals(course.getName(), pCourse.getName())) {
-			course.setName(pCourse.getName());
+
+		if (pCourseDTO.getName() != null && !Objects.equals(course.getName(), pCourseDTO.getName())) {
+			course.setName(pCourseDTO.getName());
 		}
-		if (pCourse.getDescription() != null && !Objects.equals(course.getDescription(), pCourse.getDescription())) {
-			course.setDescription(pCourse.getDescription());
+		if (pCourseDTO.getDescription() != null && !Objects.equals(course.getDescription(), pCourseDTO.getDescription())) {
+			course.setDescription(pCourseDTO.getDescription());
 		}
 	}
 
 	// Professor section
 
+	@Override
 	public Professor getProfessorByCourse(Long courseId) {
 		return courseRepository.findProfessorByCourseId(courseId)
 			.orElseThrow(() -> new IllegalStateException(
@@ -79,68 +103,54 @@ public class CourseServiceImpl implements CourseService {
 			));
 	}
 
+	@Override
 	@Transactional
 	public void addProfessor(Long courseId, Long professorId) {
-		Optional<Course> courseOptional = courseRepository.findById(courseId);
-		Optional<Professor> professorOptional = professorRepository.findById(professorId);
-	
-		if (courseOptional.isPresent() && professorOptional.isPresent()) {
-			throw new RuntimeException("The course or student weren\'t found");
+		Course course = courseRepository.findById(courseId)
+			.orElseThrow(() -> new IllegalArgumentException("Course not found"));
+
+		if (course.getProfessor() != null) {
+			throw new IllegalStateException("There's already a professor in this course");
 		}
-		
-		Course course = courseOptional.get();
-		Professor professor = professorOptional.get();
+
+		Professor professor = professorRepository.findById(professorId)
+			.orElseThrow(() -> new IllegalArgumentException("Professor not found"));
 
 		course.setProfessor(professor);
 		courseRepository.save(course);
 	}
 
+	@Override
 	@Transactional
 	public void removeProfessor(Long courseId) {
-		Optional<Course> courseOptional = courseRepository.findById(courseId);
-
-		if (courseOptional.isPresent()) {
-			throw new RuntimeException("The course or professor weren\'t found");
-		}
-
-		Course course = courseOptional.get();
+		Course course = courseRepository.findById(courseId)
+			.orElseThrow(() -> new IllegalArgumentException("The course wasn\'t found"));
 		course.removeProfessor();
 		courseRepository.save(course);
 	}
 
 	// Student section
 
+	@Override
 	public List<Student> getStudentsInCourse(Long courseId) {
 		return courseRepository.findStudentsByCourseId(courseId);
 	}
 
+	@Override
 	@Transactional
 	public void addStudent(Long courseId, Long studentId) {
-		Optional<Course> courseOptional = courseRepository.findById(courseId);
-		Optional<Student> studentOptional = studentRepository.findById(studentId);
-	
-		if (courseOptional.isPresent() && studentOptional.isPresent()) {
-			throw new RuntimeException("The course or student weren\'t found");
-		}
-		
-		Course course = courseOptional.get();
-		Student student = studentOptional.get();
+		Course course = courseRepository.findById(courseId).orElseThrow(() -> new IllegalArgumentException("Course not found"));
+		Student student = studentRepository.findById(studentId).orElseThrow(() -> new IllegalArgumentException("Student not found"));
 
 		course.addStudent(student);
 		courseRepository.save(course);
 	}
 
+	@Override
 	@Transactional
 	public void removeStudent(Long courseId, Long studentId) {
-		Optional<Course> courseOptional = courseRepository.findById(courseId);
-		Optional<Student> studentOptional = studentRepository.findById(studentId);
-
-		if (courseOptional.isPresent() && studentOptional.isPresent()) {
-			throw new RuntimeException("The course or student weren\'t found");
-		}
-
-		Course course = courseOptional.get();
-		Student student = studentOptional.get();
+		Course course = courseRepository.findById(courseId).orElseThrow(() -> new IllegalArgumentException("Course not found"));
+		Student student = studentRepository.findById(studentId).orElseThrow(() -> new IllegalArgumentException("Student not found"));
 
 		course.removeStudent(student);
 		courseRepository.save(course);
@@ -148,10 +158,12 @@ public class CourseServiceImpl implements CourseService {
 
 	// Class section
 
+	@Override
 	public List<Class> getClassesInCourse(Long courseId) {
 		return courseRepository.findClassessByCourseId(courseId);
 	}
 
+	@Override
 	@Transactional
 	public void addNewClass(Class pClass, Long courseId) {
 		Optional<Course> courseOptional = courseRepository.findById(courseId);
@@ -160,7 +172,7 @@ public class CourseServiceImpl implements CourseService {
 		Integer lastClassNumber = 0;
 		Optional<Class> topClass = courseRepository.findTopByCourseIdOrderByNumberDesc(courseId);
 		if (topClass.isPresent()) lastClassNumber = topClass.get().getNumber();
-		
+
 		Course course = courseOptional.get();
 		course.addSClass(pClass);
 		pClass.setCourse(course);
@@ -170,17 +182,18 @@ public class CourseServiceImpl implements CourseService {
 		courseRepository.save(course);
 	}
 
+	@Override
 	@Transactional
 	public void removeClass(Long courseId, Integer classNumber) {
 		Course course = courseRepository.findById(courseId)
-			.orElseThrow(() -> new IllegalStateException(
+			.orElseThrow(() -> new IllegalArgumentException(
 				"Course with id " + courseId + " doesn\'t exist"
 			));
 		Class uClass = courseRepository.findClassByCourseIdAndNumber(courseId, classNumber)
-			.orElseThrow(() -> new IllegalStateException(
+			.orElseThrow(() -> new IllegalArgumentException(
 				"Class with number " + classNumber + " not found in course " + course.getName()
 			));
-		
+
 		course.removeClass(uClass);
 		classRepository.deleteById(uClass.getId());
 	}

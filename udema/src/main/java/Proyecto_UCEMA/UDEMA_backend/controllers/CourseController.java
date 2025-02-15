@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import Proyecto_UCEMA.UDEMA_backend.dto.CourseDTO;
 import Proyecto_UCEMA.UDEMA_backend.models.Class;
 import Proyecto_UCEMA.UDEMA_backend.models.Course;
 import Proyecto_UCEMA.UDEMA_backend.models.Professor;
@@ -39,8 +40,8 @@ public class CourseController {
 
 	@Operation(summary = "Register new course", description = "Creates a new course")
 	@PostMapping
-	public void registerNewCourse(@RequestBody Course course) {
-		courseService.addNewCourse(course);
+	public void registerNewCourse(@RequestBody CourseDTO courseDTO) {
+		courseService.addNewCourse(courseDTO);
 	}
 
 	@Operation(summary = "Delete course", description = "Delete a course by it's course ID")
@@ -49,12 +50,11 @@ public class CourseController {
 		courseService.deleteCourse(courseId);
 	}
 
-	@Operation(summary = "Update course", description = "Update an specific course by ID")
+	@Operation(summary = "Update course", description = "Update an specific course general information by ID")
 	@PutMapping(path = "{courseId}")
 	public void updateCourse(
-			@PathVariable("courseId") Long courseId,
-			@RequestBody Course course) {
-		courseService.updateCourse(courseId, course);
+			@PathVariable("courseId") Long courseId, @RequestBody CourseDTO courseDTO) {
+		courseService.updateCourse(courseId, courseDTO);
 	}
 
 	// Professor section
@@ -65,7 +65,7 @@ public class CourseController {
 		return courseService.getProfessorByCourse(courseId);
 	}
 
-	@Operation(summary = "Add professot to course", description = "Add an existing professor to a certain course by the course ID and professor ID")
+	@Operation(summary = "Add professor to course", description = "Add an existing professor to a certain course by the course ID and professor ID")
 	@PostMapping("{courseId}/professor/{professorId}")
 	public void addSProfessorToCourse(
 			@PathVariable("courseId") Long courseId,
@@ -74,10 +74,8 @@ public class CourseController {
 	}
 
 	@Operation(summary = "Remove professor from course", description = "Remove an existing professor of a certain course by the course ID and professor ID")
-	@DeleteMapping("{courseId}/professor/{professorId}")
-	public void removePrfoessorFromCourse(
-			@PathVariable("courseId") Long courseId,
-			@PathVariable("professorId") Long professorId ) {
+	@DeleteMapping("{courseId}/professor")
+	public void removePrfoessorFromCourse(@PathVariable("courseId") Long courseId) {
 		courseService.removeProfessor(courseId);
 	}
 
@@ -98,7 +96,7 @@ public class CourseController {
 	}
 
 	@Operation(summary = "Remove student from course", description = "Remove an existing student of a certain course by the course ID and student ID")
-	@DeleteMapping("{courseId}/students/{studentId}")
+	@DeleteMapping("{courseId}/student/{studentId}")
 	public void removeStudentFromCourse(
 			@PathVariable("courseId") Long courseId,
 			@PathVariable("studentId") Long studentId ) {

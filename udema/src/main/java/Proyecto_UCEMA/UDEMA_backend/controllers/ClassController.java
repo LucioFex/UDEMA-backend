@@ -33,13 +33,19 @@ public class ClassController {
 		return classService.getClasses();
 	}
 
+	@Operation(summary = "Get class by id", description = "Get an specific classs by ID")
+	@GetMapping("{classId}")
+	public Class getClass(@PathVariable("classId") Long classId) {
+		return classService.getClass(classId);
+	}
+
 	@Operation(summary = "Delete class", description = "Delete an specific class by its ID")
 	@DeleteMapping(path = "{classId}")
 	public void deleteClass(@PathVariable("classId") Long classId) {
 		classService.deleteClass(classId);
 	}
 
-	@Operation(summary = "Update class", description = "Update an specific class by its ID")
+	@Operation(summary = "Update class", description = "Update the number, classroom and date of a specific class by its ID")
 	@PutMapping("{classId}")
 	public void updateClass(@PathVariable("classId") Long classId, @RequestBody Class pClass) {
 		classService.updateClass(classId, pClass);

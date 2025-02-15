@@ -11,7 +11,6 @@ import Proyecto_UCEMA.UDEMA_backend.models.Professor;
 @Repository
 public interface ProfessorRepository
 		extends JpaRepository<Professor, Long> {
-	
 	Optional<Professor> findProfessorByEmail(String email);
 	Optional<Person> findPersonByEmail(String email);
 }
