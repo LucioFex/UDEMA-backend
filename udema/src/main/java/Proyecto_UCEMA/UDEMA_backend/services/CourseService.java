@@ -3,7 +3,6 @@ package Proyecto_UCEMA.UDEMA_backend.services;
 import java.util.List;
 
 import Proyecto_UCEMA.UDEMA_backend.dto.CourseDTO;
-import Proyecto_UCEMA.UDEMA_backend.models.Class;
 import Proyecto_UCEMA.UDEMA_backend.models.Course;
 import Proyecto_UCEMA.UDEMA_backend.models.Professor;
 import Proyecto_UCEMA.UDEMA_backend.models.Student;
@@ -34,12 +33,4 @@ public interface CourseService {
 	void addStudent(Long courseId, Long studentId);
 
 	void removeStudent(Long courseId, Long studentId);
-
-	// Class section
-
-	List<Class> getClassesInCourse(Long courseId);
-
-	void addNewClass(Class pClass, Long courseId);
-
-	void removeClass(Long courseId, Integer classNumber);
 }

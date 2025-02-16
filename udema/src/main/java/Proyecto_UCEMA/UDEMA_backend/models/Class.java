@@ -2,8 +2,6 @@ package Proyecto_UCEMA.UDEMA_backend.models;
 
 import java.time.LocalDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +23,7 @@ public class Class {
 	private String classroom;
 	@Column(name = "date", nullable = false)
 	private LocalDate date;
-	@JsonIgnore
+	// @JsonIgnore // Para no mostrar la sección del curso por clase (data que mete ruido visual en el response de la APi)
 	@ManyToOne
 	private Course course;
 

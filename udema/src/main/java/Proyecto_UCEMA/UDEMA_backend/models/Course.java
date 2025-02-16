@@ -107,12 +107,4 @@ public class Course {
 	public void removeProfessor() {
 		this.professor = null;
 	}
-
-	public void addSClass(Class pClass) {
-		this.classes.add(pClass);
-	}
-
-	public void removeClass(Class pClass) {
-		this.classes.remove(pClass);
-	}
 }

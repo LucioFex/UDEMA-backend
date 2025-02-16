@@ -9,7 +9,15 @@ public interface ClassService {
 
 	Class getClass(Long classId);
 
-	void deleteClass(Long classId); // Deprecated
+	Class getClassByCourseIdAndClassNum(Long courseId, Integer classNum);
 
 	void updateClass(Long classId, Class pClass);
+
+	List<Class> getClassesInCourse(Long courseId);
+
+	void addNewClass(Class pClass, Long courseId);
+
+	void removeClass(Long classId);
+
+	void removeClassByCourseIdAndClassNum(Long courseId, Integer classNumber);
 }

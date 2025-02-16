@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import Proyecto_UCEMA.UDEMA_backend.dto.CourseDTO;
-import Proyecto_UCEMA.UDEMA_backend.models.Class;
 import Proyecto_UCEMA.UDEMA_backend.models.Course;
 import Proyecto_UCEMA.UDEMA_backend.models.Professor;
 import Proyecto_UCEMA.UDEMA_backend.models.Student;
@@ -105,25 +104,4 @@ public class CourseController {
 
 	// Class section
 
-	@Operation(summary = "Get course classes", description = "Get all the classes in a course by it's course ID")
-	@GetMapping("{courseId}/classes")
-	public List<Class> getClassesByCourseId(@PathVariable("courseId") Long courseId) {
-		return courseService.getClassesInCourse(courseId);
-	}
-
-	@Operation(summary = "Add new class", description = "Create a new class and save it in a specific course by the course ID")
-	@PostMapping("{courseId}/classes")
-	public void addNewClass(
-			@PathVariable("courseId") Long courseId,
-			@RequestBody Class pClass ) {
-		courseService.addNewClass(pClass, courseId);
-	}
-
-	@Operation(summary = "Delete class by number", description = "Delete a class by it's course class number (not ID), in a specific course, by the course ID and class number")
-	@DeleteMapping(path = "{courseId}/classes/{classNumber}")
-	public void deleteCourseClassByNumber(
-		@PathVariable("courseId") Long courseId,
-			@PathVariable("classNumber") Integer classNumber) {
-		courseService.removeClass(courseId, classNumber);
-	}
 }
