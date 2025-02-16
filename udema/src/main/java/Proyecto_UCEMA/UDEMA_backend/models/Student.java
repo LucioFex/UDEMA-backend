@@ -16,15 +16,15 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Transient;
+// import jakarta.persistence.Transient; (No es necesario dado que hay datos suficientes para calcular "year").
 
 @Entity
 @DiscriminatorValue("student")
 public class Student extends Person {
 	private LocalDate submissionDate;
 	private String career;
-	@Transient
-	private Integer year;
+	// @Transient
+	// private Integer year;
 
 	@ManyToMany(
 		fetch = FetchType.LAZY,
@@ -39,8 +39,8 @@ public class Student extends Person {
 
 	public Student() {}
 
-	public Student(String name, String surname, String email, LocalDate dateOfBirth, String password, LocalDate submissionDate, String career) {
-		super(name, surname, email, dateOfBirth, password);
+	public Student(String name, String surname, String username, String email, LocalDate dateOfBirth, String password, LocalDate submissionDate, String career) {
+		super(name, surname, username, email, dateOfBirth, password);
 		this.submissionDate = submissionDate;
 		this.career = career;
 	}
@@ -63,10 +63,6 @@ public class Student extends Person {
 
 	public Integer getYear() {
 		return Period.between(this.submissionDate, LocalDate.now()).getYears();
-	}
-
-	public void setYear(Integer year) {
-		this.year = year;
 	}
 
 	@Override

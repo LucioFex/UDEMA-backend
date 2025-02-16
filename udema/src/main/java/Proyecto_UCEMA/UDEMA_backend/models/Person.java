@@ -19,7 +19,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.Transient;
+// import jakarta.persistence.Transient; No es necesario dado que hay datos suficientes para calcular "age".
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE) // Specify this isn't necessary because it comes by default with JPA.
@@ -33,33 +33,37 @@ public abstract class Person implements UserDetails {
 	private String name;
 	@Column(name = "surname", nullable = false)
 	private String surname;
-	@Column(name = "email", nullable = false, unique = true)
+	@Column(name = "username", unique = true)
 	private String username;
-	@Column(name = "username", nullable = false, unique = true)
+	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 	@Column(name = "password", nullable = false)
 	private String password;
 	@Column(name = "dateOfBirth", nullable = false)
 	private LocalDate dateOfBirth;
-	@Transient
-	private Integer age;
+	// @Transient
+	// private Integer age;
 
 	public Person() {
 	}
 
-	public Person(Long id, String name, String surname, String email, LocalDate dateOfBirth, String password) {
+	public Person(Long id, String name, String surname, String username, String email, LocalDate dateOfBirth, String password) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
+		this.username = username;
+		// The default username is the combination of the first letter of the Name and the Surname complete.
+		if (this.username == null) this.username = this.name.substring(0, 1) + this.surname;
 		this.email = email;
 		this.dateOfBirth = dateOfBirth;
 		this.password = password;
 	}
-	public Person(String name, String surname, String email, LocalDate dateOfBirth, String password) {
+	public Person(String name, String surname, String username, String email, LocalDate dateOfBirth, String password) {
 		this.name = name;
 		this.surname = surname;
+		this.username = username;
 		// The default username is the combination of the first letter of the Name and the Surname complete.
-		this.username = name.substring(0, 1) + surname;
+		if (this.username == null) this.username = this.name.substring(0, 1) + this.surname;
 		this.email = email;
 		this.dateOfBirth = dateOfBirth;
 		this.password = password;
@@ -87,6 +91,7 @@ public abstract class Person implements UserDetails {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+		if (this.username == null) this.username = this.name.substring(0, 1) + this.surname;
 	}
 
 	public String getUsername() {
@@ -99,10 +104,6 @@ public abstract class Person implements UserDetails {
 
 	public Integer getAge() {
 		return Period.between(this.dateOfBirth, LocalDate.now()).getYears();
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
 	}
 
 	public String getEmail() {

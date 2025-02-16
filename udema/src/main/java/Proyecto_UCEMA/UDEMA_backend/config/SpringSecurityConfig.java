@@ -28,11 +28,9 @@ public class SpringSecurityConfig {
 		http
 				.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests((authorize) -> authorize
-					.requestMatchers(HttpMethod.POST, "api/auth/**").permitAll()
+					.requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
 					.requestMatchers(HttpMethod.POST, "api/students").permitAll()
 					.requestMatchers(HttpMethod.POST, "api/professors").permitAll()
-					// .requestMatchers(HttpMethod.POST, "api/courses").permitAll()
-					// .requestMatchers(HttpMethod.POST, "api/classes").permitAll()
 					.anyRequest().authenticated() // Any other request must be authenticated
 				)
 				.httpBasic(Customizer.withDefaults()) // Use of basic HTTP authentication

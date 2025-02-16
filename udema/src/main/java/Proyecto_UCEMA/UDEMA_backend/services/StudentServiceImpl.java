@@ -54,6 +54,7 @@ public class StudentServiceImpl implements StudentService{
 				"You're missing the submission date to add a student"
 			);
 		}
+		if (student.getUsername() == null) student.setUsername(null); // It will set a default username. (TODO: Esto sería automático si utilizara un DTO para esta clase, ya que ejecutaría la revisión del constructor. Por cuestiones de tiempo no lo implementaré)
 		student.setPassword(passwordEncoder.encode(student.getPassword()));
 		studentRepository.save(student);
 	}

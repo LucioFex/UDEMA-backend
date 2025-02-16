@@ -22,8 +22,8 @@ public class Professor extends Person {
 
 	public Professor() {}
 
-	public Professor(String name, String surname, String email, LocalDate dateOfBirth, String password, LocalDate submissionDate) {
-		super(name, surname, email, dateOfBirth, password);
+	public Professor(String name, String surname, String username, String email, LocalDate dateOfBirth, String password, LocalDate submissionDate) {
+		super(name, surname, username, email, dateOfBirth, password);
 		this.submissionDate = submissionDate;
 	}
 

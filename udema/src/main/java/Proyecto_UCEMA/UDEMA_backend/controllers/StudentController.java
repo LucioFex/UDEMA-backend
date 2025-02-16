@@ -20,7 +20,6 @@ import io.swagger.v3.oas.annotations.Operation;
 
 @RestController
 @RequestMapping(path = "api/students")
-@CrossOrigin(origins = "http://localhost:4200")
 public class StudentController {
 	private final StudentServiceImpl studentService;
 

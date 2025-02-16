@@ -18,9 +18,10 @@ public class StudentConfig {
 			Student harry = new Student(
 				"Harry",
 				"Potter",
+				null, // HPotter
 				"harry.potter@hogwarts.edu",
 				LocalDate.of(1980, 7, 31),
-				"expelliarmus",
+				"expelliarmus-(user_not_accesible)",
 				LocalDate.of(2024, 6, 1),
 				"Defense Against the Dark Arts"
 			);
@@ -28,9 +29,10 @@ public class StudentConfig {
 			Student hermione = new Student(
 				"Hermione",
 				"Granger",
+				null, // HGranger
 				"hermione.granger@hogwarts.edu",
 				LocalDate.of(1979, 9, 19),
-				"leviosa",
+				"leviosa-(user_not_accesible)",
 				LocalDate.of(2024, 6, 1),
 				"Arithmancy"
 			);
@@ -38,9 +40,10 @@ public class StudentConfig {
 			Student ron = new Student(
 				"Ron",
 				"Weasley",
+				"test-RWeasley", // test-RWeasley
 				"ron.weasley@hogwarts.edu",
 				LocalDate.of(1980, 3, 1),
-				"chessmaster",
+				"chessmaster-(user_not_accesible)",
 				LocalDate.of(2024, 6, 1),
 				"Wizard Chess"
 			);

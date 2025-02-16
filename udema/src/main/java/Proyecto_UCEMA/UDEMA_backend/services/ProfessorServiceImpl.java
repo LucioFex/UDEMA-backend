@@ -52,6 +52,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 				"You're missing the submission date to add a professor"
 			);
 		}
+		if (professor.getUsername() == null) professor.setUsername(null); // It will set a default username. (TODO: Esto sería automático si utilizara un DTO para esta clase, ya que ejecutaría la revisión del constructor. Por cuestiones de tiempo no lo implementaré).
 		professor.setPassword(passwordEncoder.encode(professor.getPassword()));
 		professorRepository.save(professor);
 	}
