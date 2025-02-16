@@ -160,7 +160,8 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public List<Class> getClassesInCourse(Long courseId) {
-		return courseRepository.findClassessByCourseId(courseId);
+		// return classRepository.findClassessByCourseId(courseId);
+		return classRepository.findAllByCourseId(courseId);
 	}
 
 	@Override
@@ -170,7 +171,7 @@ public class CourseServiceImpl implements CourseService {
 		if (!courseOptional.isPresent()) throw new RuntimeException("The course wasn\'t found");
 
 		Integer lastClassNumber = 0;
-		Optional<Class> topClass = courseRepository.findTopByCourseIdOrderByNumberDesc(courseId);
+		Optional<Class> topClass = classRepository.findTopByCourseIdOrderByNumberDesc(courseId);
 		if (topClass.isPresent()) lastClassNumber = topClass.get().getNumber();
 
 		Course course = courseOptional.get();
@@ -189,7 +190,7 @@ public class CourseServiceImpl implements CourseService {
 			.orElseThrow(() -> new IllegalArgumentException(
 				"Course with id " + courseId + " doesn\'t exist"
 			));
-		Class uClass = courseRepository.findClassByCourseIdAndNumber(courseId, classNumber)
+		Class uClass = classRepository.findClassByCourseIdAndNumber(courseId, classNumber)
 			.orElseThrow(() -> new IllegalArgumentException(
 				"Class with number " + classNumber + " not found in course " + course.getName()
 			));

@@ -10,13 +10,11 @@ import org.springframework.stereotype.Repository;
 
 import Proyecto_UCEMA.UDEMA_backend.models.Course;
 import Proyecto_UCEMA.UDEMA_backend.models.Professor;
-import Proyecto_UCEMA.UDEMA_backend.models.Class;
 import Proyecto_UCEMA.UDEMA_backend.models.Student;
 
 @Repository
 public interface CourseRepository
 		extends JpaRepository<Course, Long> {
-
 	Course findByName(String name);
 
 	@Query("SELECT c.professor FROM Course c WHERE c.id = :courseId")
@@ -24,13 +22,4 @@ public interface CourseRepository
 
 	@Query("SELECT c.students FROM Course c WHERE c.id = :courseId")
 	List<Student> findStudentsByCourseId(@Param("courseId") Long courseId);
-
-	@Query("SELECT c.classes FROM Course c WHERE c.id = :courseId")
-	List<Class> findClassessByCourseId(@Param("courseId") Long courseId);
-
-	@Query("SELECT c FROM Class c WHERE c.course.id = :courseId AND c.number = :classNumber")
-	Optional<Class> findClassByCourseIdAndNumber(@Param("courseId") Long courseId, @Param("classNumber") Integer classNumber);
-
-	@Query("SELECT c FROM Class c WHERE c.course.id = :courseId ORDER BY c.number DESC LIMIT 1")
-	Optional<Class> findTopByCourseIdOrderByNumberDesc(@Param("courseId") Long courseId);
 }

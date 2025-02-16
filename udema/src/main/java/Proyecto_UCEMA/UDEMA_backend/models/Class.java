@@ -2,6 +2,8 @@ package Proyecto_UCEMA.UDEMA_backend.models;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +25,7 @@ public class Class {
 	private String classroom;
 	@Column(name = "date", nullable = false)
 	private LocalDate date;
+	@JsonIgnore
 	@ManyToOne
 	private Course course;
 
