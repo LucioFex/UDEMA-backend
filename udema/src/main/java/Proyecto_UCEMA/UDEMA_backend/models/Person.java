@@ -2,13 +2,29 @@ package Proyecto_UCEMA.UDEMA_backend.models;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Transient;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE) // Specify this isn't necessary because it comes by default with JPA.
 @DiscriminatorColumn(name = "person_type", discriminatorType = DiscriminatorType.STRING)
-public abstract class Person {
+public abstract class Person implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 
@@ -18,6 +34,8 @@ public abstract class Person {
 	@Column(name = "surname", nullable = false)
 	private String surname;
 	@Column(name = "email", nullable = false, unique = true)
+	private String username;
+	@Column(name = "username", nullable = false, unique = true)
 	private String email;
 	@Column(name = "password", nullable = false)
 	private String password;
@@ -40,6 +58,8 @@ public abstract class Person {
 	public Person(String name, String surname, String email, LocalDate dateOfBirth, String password) {
 		this.name = name;
 		this.surname = surname;
+		// The default username is the combination of the first letter of the Name and the Surname complete.
+		this.username = name.substring(0, 1) + surname;
 		this.email = email;
 		this.dateOfBirth = dateOfBirth;
 		this.password = password;
@@ -67,6 +87,14 @@ public abstract class Person {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public Integer getAge() {
@@ -107,9 +135,41 @@ public abstract class Person {
 			" id='" + getId() + "'" +
 			", name='" + getName() + "'" +
 			", surname='" + getSurname() + "'" +
+			", username='" + getUsername() + "'" +
 			", age='" + getAge() + "'" +
 			", email='" + getEmail() + "'" +
 			", password='" + getPassword() + "'" +
 			"}";
+	}
+
+	public abstract String getRole();
+
+	// UserDetails implementation:
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		authorities.add(new SimpleGrantedAuthority(getRole()));
+		return authorities;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 }

@@ -36,7 +36,7 @@ public class StudentController {
 
 	@Operation(summary = "Get specific student", description = "Get specific student by ID")
 	@GetMapping("{studentId}")
-	public Optional<Student> getStudent(@PathVariable("studentId") Long studentId) {
+	public Student getStudent(@PathVariable("studentId") Long studentId) {
 		return studentService.getStudent(studentId);
 	}
 

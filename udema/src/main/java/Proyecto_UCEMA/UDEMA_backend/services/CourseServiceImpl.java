@@ -54,7 +54,7 @@ public class CourseServiceImpl implements CourseService {
 		}
 
 		// Professor addition
-		professor = professorRepository.findById(courseDTO.getProfessorId()).orElseThrow(() -> new EntityNotFoundException("Student not found: " + courseDTO.getProfessorId()));
+		professor = professorRepository.findById(courseDTO.getProfessorId()).orElseThrow(() -> new EntityNotFoundException("Professor not found: " + courseDTO.getProfessorId()));
 		course.setProfessor(professor);
 
 		// Course save

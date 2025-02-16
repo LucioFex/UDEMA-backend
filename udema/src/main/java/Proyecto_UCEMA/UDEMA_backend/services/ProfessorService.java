@@ -15,5 +15,5 @@ public interface ProfessorService {
 
 	void updateProfessor(Long professorId, Professor pProfessor);
 
-	void changePasswordProfessor(Long professorId, String password);
+	String authenticate(String username, String password);
 }

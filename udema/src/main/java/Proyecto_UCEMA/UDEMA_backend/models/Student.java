@@ -2,7 +2,12 @@ package Proyecto_UCEMA.UDEMA_backend.models;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
@@ -62,5 +67,17 @@ public class Student extends Person {
 
 	public void setYear(Integer year) {
 		this.year = year;
+	}
+
+	@Override
+	public String getRole() {
+		return "ROLE_STUDENT";
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> authorities = new ArrayList<>();
+		authorities.add(new SimpleGrantedAuthority("ROLE_STUDENT"));
+		return authorities;
 	}
 }
