@@ -19,34 +19,122 @@ public class ClassConfig {
 	@Bean
 	CommandLineRunner commandLineRunnerClass(ClassRepository classRepository, CourseRepository courseRepository) {
 		return args -> { // Used for testing
-			Course potionsCourse = new Course(
-				"PotionsCourse",
-				"Learn how to brew various magical potionsCourse."
-			);
-			courseRepository.save(potionsCourse);
-			
-			Course charmsCourse = new Course(
-				"CharmsCourse",
-				"Master the art of spellcasting and learn various magical charms."
-			);
-			courseRepository.save(charmsCourse);
+			Course potionsBrewing = courseRepository.findByName("Potions Brewing");
 
-			// Crear clases y asociarlas con el curso
 			Class class1 = new Class(
 				1,
 				"A2",
 				LocalDate.of(2024, 7, 25),
-				potionsCourse
+				potionsBrewing
 			);
+
 			Class class2 = new Class(
 				2,
-				"B3",
-				LocalDate.of(2024, 7, 26),
-				charmsCourse
+				"B4",
+				LocalDate.of(2024, 8, 1),
+				potionsBrewing
+			);
+
+			Class class3 = new Class(
+				3,
+				"C5",
+				LocalDate.of(2024, 8, 8),
+				potionsBrewing
+			);
+
+			Class class4 = new Class(
+				4,
+				"A2",
+				LocalDate.of(2024, 8, 15),
+				potionsBrewing
+			);
+
+			Class class5 = new Class(
+				5,
+				"B4",
+				LocalDate.of(2024, 8, 22),
+				potionsBrewing
+			);
+
+			Class class6 = new Class(
+				6,
+				"C5",
+				LocalDate.of(2024, 8, 29),
+				potionsBrewing
+			);
+
+			Class class7 = new Class(
+				7,
+				"A2",
+				LocalDate.of(2024, 9, 5),
+				potionsBrewing
+			);
+
+			Class class8 = new Class(
+				8,
+				"B4",
+				LocalDate.of(2024, 9, 12),
+				potionsBrewing
+			);
+
+			Class class9 = new Class(
+				9,
+				"C5",
+				LocalDate.of(2024, 9, 19),
+				potionsBrewing
+			);
+
+			Class class10 = new Class(
+				10,
+				"A2",
+				LocalDate.of(2024, 9, 26),
+				potionsBrewing
+			);
+
+			Class class11 = new Class(
+				11,
+				"B4",
+				LocalDate.of(2024, 10, 3),
+				potionsBrewing
+			);
+
+			Class class12 = new Class(
+				12,
+				"C5",
+				LocalDate.of(2024, 10, 10),
+				potionsBrewing
+			);
+
+			Class class13 = new Class(
+				13,
+				"A2",
+				LocalDate.of(2024, 10, 17),
+				potionsBrewing
+			);
+
+			Class class14 = new Class(
+				14,
+				"B4",
+				LocalDate.of(2024, 10, 24),
+				potionsBrewing
+			);
+
+			Class class15 = new Class(
+				15,
+				"C5",
+				LocalDate.of(2024, 10, 31),
+				potionsBrewing
+			);
+
+			Class class16 = new Class(
+				16,
+				"A2",
+				LocalDate.of(2024, 11, 7),
+				potionsBrewing
 			);
 
 			classRepository.saveAll(
-				List.of(class1, class2)
+				List.of(class1, class2, class3, class4, class5, class6, class7, class8, class9, class10, class11, class12, class13, class14, class15, class16)
 			);
 		};
 	}

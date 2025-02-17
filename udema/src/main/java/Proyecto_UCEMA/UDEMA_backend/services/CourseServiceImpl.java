@@ -41,6 +41,11 @@ public class CourseServiceImpl implements CourseService {
 	}
 
 	@Override
+	public Course getCourse(Long courseId) {
+		return courseRepository.findById(courseId).orElseThrow(() -> new EntityNotFoundException("Course not found"));
+	}
+
+	@Override
 	@Transactional
 	public void addNewCourse(CourseDTO courseDTO) {
 		Course course = new Course(courseDTO.getId(), courseDTO.getName(), courseDTO.getDescription());
@@ -93,10 +98,7 @@ public class CourseServiceImpl implements CourseService {
 
 	@Override
 	public Professor getProfessorByCourse(Long courseId) {
-		return courseRepository.findProfessorByCourseId(courseId)
-			.orElseThrow(() -> new IllegalStateException(
-				"The course with id " + courseId + " doesn\'t have a professor selected"
-			));
+		return courseRepository.findProfessorByCourseId(courseId).orElse(null);
 	}
 
 	@Override

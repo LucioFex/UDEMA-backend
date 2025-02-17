@@ -2,7 +2,6 @@ package Proyecto_UCEMA.UDEMA_backend.controllers;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +33,12 @@ public class CourseController {
 	@GetMapping
 	public List<Course> getCourses() {
 		return courseService.getCourses();
+	}
+
+	@Operation(summary = "Get courses", description = "Get all courses")
+	@GetMapping("{courseId}")
+	public Course getCourse(@PathVariable("courseId") Long courseId) {
+		return courseService.getCourse(courseId);
 	}
 
 	@Operation(summary = "Register new course", description = "Creates a new course")
