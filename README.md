@@ -36,7 +36,6 @@ Es posible revisar el listado de endpoints disponibles utilizando Swagger.
 El endpoint para acceder al mismo es el siguiente:
 
 ```bash
-# Considerar que el puerto puede cambiar dependiendo de la configuración utilizada en el proyecto
 http://localhost:8080/swagger-ui/index.html
 ```
 
