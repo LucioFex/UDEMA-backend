@@ -15,54 +15,54 @@ public class CourseConfig {
 	CommandLineRunner commandLineRunnerCourse(CourseRepository repository) {
 		return args -> {
 			Course potionsBrewing = new Course(
-				"Potions Brewing", 
+				"Potions Brewing",
 				"Discover the secrets of potion-making and their magical effects."
 			);
 
 			Course defenseAgainstTheDarkArts = new Course(
-				"Defense Against the Dark Arts", 
+				"Defense Against the Dark Arts",
 				"Learn how to defend yourself against dark magic."
 			);
 
 			Course wizardChessStrategies = new Course(
-				"Wizard Chess Strategies", 
+				"Wizard Chess Strategies",
 				"Master the art of wizard chess."
 			);
 
 			Course transfigurationBasics = new Course(
-				"Transfiguration Basics", 
+				"Transfiguration Basics",
 				"Learn how to transform objects and beings with magic."
 			);
 
 			Course magicalCreaturesCare = new Course(
-				"Magical Creatures Care", 
+				"Magical Creatures Care",
 				"Understand and care for fantastic magical creatures."
 			);
 
 			Course historyOfMagic = new Course(
-				"History of Magic", 
+				"History of Magic",
 				"Explore the rich and fascinating history of the magical world."
 			);
 
 			Course charmsAndSpells = new Course(
-				"Charms and Spells", 
+				"Charms and Spells",
 				"Learn how to cast spells and enchant objects."
 			);
 
 			Course herbology = new Course(
-				"Herbology", 
+				"Herbology",
 				"Study magical plants and their uses in wizardry."
 			);
 
 			Course quidditchTactics = new Course(
-				"Quidditch Tactics", 
+				"Quidditch Tactics",
 				"Improve your skills and strategies in the wizarding sport of Quidditch."
 			);
 
 			repository.saveAll(
 				List.of(
-					defenseAgainstTheDarkArts, wizardChessStrategies, potionsBrewing, 
-					transfigurationBasics, magicalCreaturesCare, historyOfMagic, 
+					defenseAgainstTheDarkArts, wizardChessStrategies, potionsBrewing,
+					transfigurationBasics, magicalCreaturesCare, historyOfMagic,
 					charmsAndSpells, herbology, quidditchTactics
 				)
 			);

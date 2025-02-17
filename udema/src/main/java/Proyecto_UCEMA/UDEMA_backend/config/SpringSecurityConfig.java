@@ -29,6 +29,7 @@ public class SpringSecurityConfig {
 				.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests((authorize) -> authorize
 					.requestMatchers(HttpMethod.POST, "/api/auth/**").permitAll()
+					.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**").permitAll()
 					.requestMatchers(HttpMethod.POST, "api/students").permitAll()
 					.requestMatchers(HttpMethod.POST, "api/professors").permitAll()
 					.anyRequest().authenticated() // Any other request must be authenticated
