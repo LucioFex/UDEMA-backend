@@ -5,6 +5,10 @@ Este repositorio contiene el backend de la aplicación UDEMA, una API realizada 
 
 A continuación se detallarán los pasos para correr la aplicación.
 
+## Diagrama de clases
+
+<img src="https://github.com/user-attachments/assets/e5f2e513-06fe-4ff6-bed4-76fe9bbeeef8" width=50% height=auto>
+
 ## Preparación de la base de datos
 
 Si es la primera vez que se intenta ejecutar la aplicación, se debe realizar lo siguiente.
